@@ -21,7 +21,7 @@ function Chat() {
       
         messagesEndRef.current.scrollIntoView({ behavior: 'smooth' })
       
-    }, [messages]);
+    }, []);
     useEffect(()=>{
         if(roomId){
             db.collection('rooms').doc(roomId).
