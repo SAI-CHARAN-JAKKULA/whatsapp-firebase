@@ -1,6 +1,6 @@
 import React from 'react'
 import './Chat.css';
-import { useState,useEffect } from 'react';
+import { useState,useEffect,useRef } from 'react';
 import { useParams } from 'react-router';
 import MicIcon from '@material-ui/icons/Mic';
 import InsertEmoticonIcon from '@material-ui/icons/InsertEmoticon';
@@ -16,7 +16,12 @@ function Chat() {
     const [roomName,setRoomName]=useState("");
     const [messages,setMessages]=useState([]);
     const [{user},dispatch]=useStateValue();
-
+    const messagesEndRef = useRef(null);
+    useEffect(() => {
+      
+        messagesEndRef.current.scrollIntoView({ behavior: 'smooth' })
+      
+    }, [messages]);
     useEffect(()=>{
         if(roomId){
             db.collection('rooms').doc(roomId).
@@ -80,7 +85,7 @@ function Chat() {
                     {message.message}
                     <span className='chat_timestamp'>{new Date(message.timestamp?.toDate()).toUTCString()}</span>
                 </p>))}
-                 
+                <div ref={messagesEndRef} />
             </div>
             <div className='chat_footer'>
                 <InsertEmoticonIcon/>
